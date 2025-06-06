@@ -1,16 +1,9 @@
-DRIVE='/dev/nvme0n1'
+#!/bin/bash
+
+source config.env || { echo "Error: config.env not found"; exit 1; }
+
 boot_dev="$DRIVE"p1
 btrfs_dev="$DRIVE"p2
-DRIVE_PASSPHRASE='drivepassword'
-ROOT_PASSWORD='rootpassword'
-HOSTNAME='hostname'
-USER_NAME='user'
-USER_PASSWORD='userpassword'
-TIMEZONE='Iran'
-WIRELESS='wlan0'
-WIFI_PASSWORD='wifipassword'
-WIFI_SSID='wifi'
-CPU='intel'
 
 network_config() {
     iwctl
