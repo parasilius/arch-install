@@ -7,6 +7,7 @@ TIMEZONE='Iran'
 WIRELESS='wlan0'
 WIFI_PASSWORD='wifipassword'
 WIFI_SSID='wifi'
+CPU='intel'
 
 network_config() {
     iwctl
@@ -34,4 +35,33 @@ partition_drive() {
         exit 1
     fi
     echo -e "o\nY\nn\n\n+1G\nef00\nn\n\n\n\nw\nY\n"
+}
+
+format_partitions() {
+    local boot_dev="$DRIVE"p1
+    local btrfs_dev="$DRIVE"p2
+
+    if ! lsmod | grep "dm_crypt" &>/dev/null; then
+        modprobe dm_crypt
+    fi
+
+    cryptsetup -v luksFormat "$btrfs_dev"
+    cryptsetup open "$btrfs_dev" main
+    mkfs.btrfs /dev/mapper/main
+    mkfs.fat -F 32 "$boot_dev"
+    mount /dev/mapper/main /mnt
+    btrfs subvolume create /mnt/@
+    btrfs subvolume create /mnt/@home
+    btrfs subvolume create /mnt/@snapshots
+    btrfs subvolume create /mnt/@var_log
+    btrfs subvolume create /mnt/@swap
+    umount /mnt
+    # cryptsetup close main
+    # cryptsetup open "$btrfs_dev" main
+    mount -o noatime,compress=zstd,space_cache=v2,subvol=@ /dev/mapper/main /mnt
+    mount -o noatime,compress=zstd,space_cache=v2,subvol=@home --mkdir /dev/mapper/main /mnt/home
+    mount -o noatime,compress=zstd,space_cache=v2,subvol=@snapshots --mkdir /dev/mapper/main /mnt/.snapshots
+    mount -o noatime,compress=zstd,space_cache=v2,subvol=@var_log --mkdir /dev/mapper/main /mnt/var/log
+    mount --mkdir "$boot_dev" /mnt/boot
+    mount -o noatime,subvol=@swap --mkdir /dev/mapper/main /mnt/swap
 }
