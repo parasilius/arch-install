@@ -72,7 +72,7 @@ create_swap() {
 
 install_packages() {
     reflector --latest 10 --download-timeout 60 --sort rate --save /etc/pacman.d/mirrorlist
-    pacstrap -K /mnt base linux linux-firmware neovim networkmanager "$CPU"-ucode zsh sudo git openssh
+    pacstrap -K /mnt base linux linux-firmware neovim networkmanager "$CPU"-ucode zsh sudo git openssh pipewire pipewire-pulse wireplumber
 }
 
 configure_system() {
