@@ -16,6 +16,10 @@
   - 2GiB swap file
   - GRUB bootloader configuration
   - Basic user creation
+- **Additional Packages**:
+    - Neovim
+    - Microcode
+    - PipeWire
 
 ## To-Do
 - [ ] Add support for Virtual Machines
