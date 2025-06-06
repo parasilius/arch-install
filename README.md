@@ -19,5 +19,5 @@
 
 ## To-Do
 - [ ] Add support for Virtual Machines
-- [ ] Add post-installation script (System Backup and more!)
+- [ ] Add post-installation script (System Backup, KDE Plasma, fonts, and more!)
 - [ ] Test the script!
