@@ -70,3 +70,8 @@ create_swap() {
     btrfs filesystem mkswapfile --uuid clear /mnt/swap/swapfile
     swapon /mnt/swap/swapfile
 }
+
+install_packages() {
+    reflector --latest 10 --download-timeout 60 --sort rate --save /etc/pacman.d/mirrorlist
+    pacstrap -K /mnt base linux linux-firmware neovim networkmanager "$CPU"-ucode zsh sudo git openssh
+}
