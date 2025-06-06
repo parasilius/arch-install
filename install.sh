@@ -65,3 +65,8 @@ format_partitions() {
     mount --mkdir "$boot_dev" /mnt/boot
     mount -o noatime,subvol=@swap --mkdir /dev/mapper/main /mnt/swap
 }
+
+create_swap() {
+    btrfs filesystem mkswapfile --uuid clear /mnt/swap/swapfile
+    swapon /mnt/swap/swapfile
+}
