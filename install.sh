@@ -2,35 +2,41 @@
 
 source config.env || { echo "Error: config.env not found"; exit 1; }
 
-boot_dev="$DRIVE"p1
-btrfs_dev="$DRIVE"p2
+run() {
+    local boot_dev="$DRIVE"p1
+    local btrfs_dev="$DRIVE"p2
+
+    echo 'Configuring network...'
+    network_config
+
+    echo 'Partitioning drive...'
+    partition_drive
+
+    echo 'Formatting partitions...'
+    format_partitions
+
+    echo 'Creating swap file...'
+    create_swap
+
+    echo 'Installing packages...'
+    install_packages
+
+    echo 'Configuring the system...'
+    configure_system
+}
 
 network_config() {
-    iwctl
-        station "$WIRELESS" scan
-        station "$WIRELESS" connect "$WIFI_SSID"
-        if [ -z "$WIFI_PASSWORD" ]
-        then
-            echo 'Enter the WiFi password:'
-            stty -echo
-            read WIFI_PASSWORD
-            stty echo
-        fi
-        echo "$WIFI_PASSWORD"
+    iwctl station "$WIRELESS" scan
+    iwctl --passphrase="$WIFI_PASSWORD" station "$WIRELESS" connect "$WIFI_SSID"
 }
 
 partition_drive() {
-    local dev="$1"; shift
-
-    if [ -z "$DRIVE" ]
-    then
-        read -p "Enter the target disk (e.g., /dev/sda or /dev/nvme0n1): " DISK
+    if [[ ! -b "$DRIVE" ]]; then
+        echo "Error: $DRIVE is not a valid block device."
+        return 1
     fi
-    if [[ ! -b "$DISK" ]]; then
-        echo "Error: $DISK is not a valid block device."
-        exit 1
-    fi
-    echo -e "o\nY\nn\n\n+1G\nef00\nn\n\n\n\nw\nY\n"
+    wipefs --all "$DRIVE"
+    printf -e 'o\nY\nn\n\n+1G\nef00\nn\n\n\n\nw\nY\n' | gdisk "$DRIVE"
 }
 
 format_partitions() {
@@ -100,3 +106,5 @@ configure_system() {
     umount -R /mnt
     reboot
 }
+
+run
