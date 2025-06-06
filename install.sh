@@ -87,7 +87,7 @@ configure_system() {
     echo "127.0.1.1 $HOSTNAME" >> /etc/hosts
     echo -en "$ROOT_PASSWORD\n$ROOT_PASSWORD" | passwd
     useradd -mG wheel "$USER_NAME"
-    echo -en "$password\n$password" | passwd "$USER_NAME"
+    echo -en "$USER_PASSWORD\n$USER_PASSWORD" | passwd "$USER_NAME"
     sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
     sed -i '/^HOOKS=/ {
         s/\<filesystems\>/encrypt &/
