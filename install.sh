@@ -1,6 +1,9 @@
 DRIVE='/dev/nvme0n1'
+boot_dev="$DRIVE"p1
+btrfs_dev="$DRIVE"p2
 DRIVE_PASSPHRASE='drivepassword'
 ROOT_PASSWORD='rootpassword'
+HOSTNAME='hostname'
 USER_NAME='user'
 USER_PASSWORD='userpassword'
 TIMEZONE='Iran'
@@ -38,9 +41,6 @@ partition_drive() {
 }
 
 format_partitions() {
-    local boot_dev="$DRIVE"p1
-    local btrfs_dev="$DRIVE"p2
-
     if ! lsmod | grep "dm_crypt" &>/dev/null; then
         modprobe dm_crypt
     fi
@@ -74,4 +74,36 @@ create_swap() {
 install_packages() {
     reflector --latest 10 --download-timeout 60 --sort rate --save /etc/pacman.d/mirrorlist
     pacstrap -K /mnt base linux linux-firmware neovim networkmanager "$CPU"-ucode zsh sudo git openssh
+}
+
+configure_system() {
+    genfstab -U /mnt >> /mnt/etc/fstab
+    arch-chroot /mnt
+    ln -sf /usr/share/zoneinfo/Iran /etc/localtime
+    hwclock --systohc
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    locale-gen
+    echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+    echo "$HOSTNAME" >> /etc/hostname
+    echo "127.0.1.1 $HOSTNAME" >> /etc/hosts
+    echo -en "$ROOT_PASSWORD\n$ROOT_PASSWORD" | passwd
+    useradd -mG wheel "$USER_NAME"
+    echo -en "$password\n$password" | passwd "$USER_NAME"
+    sed -i 's/^MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
+    sed -i '/^HOOKS=/ {
+        s/\<filesystems\>/encrypt &/
+    }' /etc/mkinitcpio.conf
+    mkinitcpio -P
+    pacman -S grub efibootmgr
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+    btrfs_uuid=$(blkid "$btrfs_dev" -o value -s UUID)
+    sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/ {
+        s/\"$/ root=\/dev\/mapper\/main cryptdevice=UUID=${btrfs_uuid}:main\"/
+    }" /etc/default/grub
+    grub-mkconfig -o /boot/grub/grub.cfg
+    systemctl enable NetworkManager.service
+    swapoff /swap/swapfile
+    exit
+    umount -R /mnt
+    reboot
 }
