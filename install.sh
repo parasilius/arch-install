@@ -21,3 +21,17 @@ network_config() {
         fi
         echo "$WIFI_PASSWORD"
 }
+
+partition_drive() {
+    local dev="$1"; shift
+
+    if [ -z "$DRIVE" ]
+    then
+        read -p "Enter the target disk (e.g., /dev/sda or /dev/nvme0n1): " DISK
+    fi
+    if [[ ! -b "$DISK" ]]; then
+        echo "Error: $DISK is not a valid block device."
+        exit 1
+    fi
+    echo -e "o\nY\nn\n\n+1G\nef00\nn\n\n\n\nw\nY\n"
+}
