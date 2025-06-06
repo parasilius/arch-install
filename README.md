@@ -20,6 +20,9 @@
     - Neovim
     - Microcode
     - PipeWire
+    - Git
+    - Zsh
+    - OpenSSH
 
 ## To-Do
 - [ ] Add support for Virtual Machines
