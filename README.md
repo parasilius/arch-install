@@ -1,5 +1,5 @@
 # Arch Linux Installation
-![Arch Linux logo](https://archlinux.org/static/logos/archlinux-logo-dark-scalable.svg)
+![Arch Linux logo](https://archlinux.org/static/logos/archlinux-logo-light-scalable.svg)
 
 This repository provides both manual and automated installation solutions for Arch Linux:
 
