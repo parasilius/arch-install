@@ -11,7 +11,7 @@ This repository provides both manual and automated installation solutions for Ar
 - Installer script  (direct implementation of wiki steps - **untested: use with caution**)
 - Post-installation automation script (coming soon)
 
-## Features
+## ✨ Features
 - **Partitioning**:
   - 1GiB FAT32 `/boot` (UEFI System Partition)
   - Remaining space as Btrfs `/` with subvolumes (based on [Arch Wiki's Suggested filesystem layout](https://wiki.archlinux.org/title/Snapper#Suggested_filesystem_layout)):
@@ -37,13 +37,13 @@ This repository provides both manual and automated installation solutions for Ar
     - Zsh
     - OpenSSH
 
-## To-Do
+## ✅ To-Do
 - [ ] Add more details to wiki
 - [ ] Add Virtual Machine support to script
 - [ ] Add post-installation script (System Backup, KDE Plasma, fonts, and more!)
 - [ ] Test the script!
 
-## Resources
+## 🔗 Resources
 - [Arch Wiki](https://wiki.archlinux.org/title/Main_page)
 - [Modern Arch linux installation guide](https://gist.github.com/mjkstra/96ce7a5689d753e7a6bdd92cdc169bae)
 - [Setting Up Arch Linux With BTRFS, Encryption, and Swap](https://www.codyhou.com/arch-encrypt-swap/)
