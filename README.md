@@ -1,6 +1,15 @@
-# Arch Linux Installer
+# Arch Linux Installation
+![Arch Linux logo](https://archlinux.org/static/logos/archlinux-logo-dark-scalable.svg)
 
-**NOTE:** This script is not tested yet!
+This repository provides both manual and automated installation solutions for Arch Linux:
+
+## 📚 Manual Installation
+- Detailed wiki covering the installation process (currently in progress)
+- Step-by-step configuration guidance
+
+## ⚙️ Automated Installation
+- Installer script  (direct implementation of wiki steps - **untested: use with caution**)
+- Post-installation automation script (coming soon)
 
 ## Features
 - **Partitioning**:
@@ -16,6 +25,8 @@
   - 2GiB swap file
   - GRUB bootloader configuration
   - Basic user creation
+  - KDE minimal setup
+  - Security hardening
 - **Additional Packages**:
     - Neovim
     - Microcode
@@ -25,7 +36,8 @@
     - OpenSSH
 
 ## To-Do
-- [ ] Add support for Virtual Machines
+- [ ] Add more details to wiki
+- [ ] Add Virtual Machine support to script
 - [ ] Add post-installation script (System Backup, KDE Plasma, fonts, and more!)
 - [ ] Test the script!
 
