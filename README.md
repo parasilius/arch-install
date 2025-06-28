@@ -20,13 +20,13 @@ This repository contains my custom Arch Linux installation, offering both manual
     - `@snapshots`
     - `@var_log`
 - **Setup**:
-  - LUKS encryption
-  - Base system installation (kernel + essential packages)
+  - Base system installation
   - Wireless network configuration
   - 2GiB swap file creation
+  - LUKS encryption
   - GRUB bootloader installation
   - User account creation with sudo privileges
-  - System snapshot/backup setup
+  - System backups: Snapper (Btrfs) + `/boot` backup
   - KDE Plasma (minimal installation)
   - Security hardening
 
