@@ -19,17 +19,19 @@ This repository provides both manual and automated installation solutions for Ar
     - `@home`
     - `@snapshots`
     - `@var_log`
-- **Automated Setup**:
-  - Base system installation
-  - Wireless Internet connection
-  - 2GiB swap file
-  - GRUB bootloader configuration
-  - Basic user creation
-  - KDE minimal setup
+- **Setup**:
+  - LUKS encryption
+  - Base system installation (kernel + essential packages)
+  - Wireless network configuration
+  - 2GiB swap file creation
+  - GRUB bootloader installation (UEFI/BIOS)
+  - User account creation with sudo privileges
+  - System snapshot/backup setup
+  - KDE Plasma (minimal installation)
   - Security hardening
 - **Additional Packages**:
     - Neovim
-    - Microcode
+    - CPU Microcode
     - PipeWire
     - Git
     - Zsh
