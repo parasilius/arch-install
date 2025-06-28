@@ -1,7 +1,7 @@
 # Arch Linux Installation
 ![Arch Linux logo](https://archlinux.org/static/logos/archlinux-logo-light-scalable.svg)
 
-This repository provides both manual and automated installation solutions for Arch Linux:
+This repository contains my custom Arch Linux installation, offering both manual and automated approaches:
 
 ## 📚 Manual Installation
 - Detailed wiki covering the installation process (currently in progress)
@@ -13,7 +13,7 @@ This repository provides both manual and automated installation solutions for Ar
 
 ## ✨ Features
 - **Partitioning**:
-  - 1GiB FAT32 `/boot` (UEFI System Partition)
+  - 1GiB FAT32 `/boot` ([EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition))
   - Remaining space as Btrfs `/` with subvolumes (based on [Arch Wiki's Suggested filesystem layout](https://wiki.archlinux.org/title/Snapper#Suggested_filesystem_layout)):
     - `@` (root)
     - `@home`
@@ -24,18 +24,11 @@ This repository provides both manual and automated installation solutions for Ar
   - Base system installation (kernel + essential packages)
   - Wireless network configuration
   - 2GiB swap file creation
-  - GRUB bootloader installation (UEFI/BIOS)
+  - GRUB bootloader installation
   - User account creation with sudo privileges
   - System snapshot/backup setup
   - KDE Plasma (minimal installation)
   - Security hardening
-- **Additional Packages**:
-    - Neovim
-    - CPU Microcode
-    - PipeWire
-    - Git
-    - Zsh
-    - OpenSSH
 
 ## ✅ To-Do
 - [ ] Add more details to wiki
